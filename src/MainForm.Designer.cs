@@ -2,14 +2,8 @@
 {
     partial class MainForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
@@ -22,10 +16,6 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
@@ -57,33 +47,29 @@
             this.TabPages.SuspendLayout();
             this.PanelSearch.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // menuStripTab
-            // 
+            
+
             this.menuStripTab.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStripTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuCloseTab,
             this.menuCloseOtherTabs});
             this.menuStripTab.Name = "menuStripTab";
             this.menuStripTab.Size = new System.Drawing.Size(198, 52);
-            // 
-            // menuCloseTab
-            // 
+            
+
             this.menuCloseTab.Name = "menuCloseTab";
             this.menuCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
             this.menuCloseTab.Size = new System.Drawing.Size(197, 24);
             this.menuCloseTab.Text = "Close tab";
             this.menuCloseTab.Click += new System.EventHandler(this.menuCloseTab_Click);
-            // 
-            // menuCloseOtherTabs
-            // 
+           
+            
             this.menuCloseOtherTabs.Name = "menuCloseOtherTabs";
             this.menuCloseOtherTabs.Size = new System.Drawing.Size(197, 24);
             this.menuCloseOtherTabs.Text = "Close other tabs";
             this.menuCloseOtherTabs.Click += new System.EventHandler(this.menuCloseOtherTabs_Click);
-            // 
-            // BtnRefresh
-            // 
+            
+
             this.BtnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnRefresh.ForeColor = System.Drawing.Color.White;
@@ -95,9 +81,8 @@
             this.BtnRefresh.TabIndex = 3;
             this.BtnRefresh.UseVisualStyleBackColor = true;
             this.BtnRefresh.Click += new System.EventHandler(this.bRefresh_Click);
-            // 
-            // BtnStop
-            // 
+            
+
             this.BtnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnStop.ForeColor = System.Drawing.Color.White;
@@ -109,9 +94,8 @@
             this.BtnStop.TabIndex = 2;
             this.BtnStop.UseVisualStyleBackColor = true;
             this.BtnStop.Click += new System.EventHandler(this.bStop_Click);
-            // 
-            // BtnForward
-            // 
+            
+
             this.BtnForward.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnForward.ForeColor = System.Drawing.Color.White;
             this.BtnForward.Image = ((System.Drawing.Image)(resources.GetObject("BtnForward.Image")));
@@ -122,9 +106,8 @@
             this.BtnForward.TabIndex = 1;
             this.BtnForward.UseVisualStyleBackColor = true;
             this.BtnForward.Click += new System.EventHandler(this.bForward_Click);
-            // 
-            // BtnBack
-            // 
+            
+
             this.BtnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnBack.ForeColor = System.Drawing.Color.White;
             this.BtnBack.Image = ((System.Drawing.Image)(resources.GetObject("BtnBack.Image")));
@@ -135,14 +118,12 @@
             this.BtnBack.TabIndex = 0;
             this.BtnBack.UseVisualStyleBackColor = true;
             this.BtnBack.Click += new System.EventHandler(this.bBack_Click);
-            // 
-            // timer1
-            // 
+            
+
             this.timer1.Interval = 50;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // BtnDownloads
-            // 
+            
+
             this.BtnDownloads.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnDownloads.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnDownloads.ForeColor = System.Drawing.Color.White;
@@ -155,9 +136,8 @@
             this.BtnDownloads.Tag = "Downloads";
             this.BtnDownloads.UseVisualStyleBackColor = true;
             this.BtnDownloads.Click += new System.EventHandler(this.bDownloads_Click);
-            // 
-            // TxtURL
-            // 
+            
+
             this.TxtURL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TxtURL.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -170,9 +150,8 @@
             this.TxtURL.Click += new System.EventHandler(this.txtUrl_Click);
             this.TxtURL.TextChanged += new System.EventHandler(this.txtUrl_TextChanged);
             this.TxtURL.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtURL_KeyDown);
-            // 
-            // PanelToolbar
-            // 
+            
+
             this.PanelToolbar.BackColor = System.Drawing.Color.White;
             this.PanelToolbar.Controls.Add(this.BtnHome);
             this.PanelToolbar.Controls.Add(this.TxtURL);
@@ -187,9 +166,8 @@
             this.PanelToolbar.Name = "PanelToolbar";
             this.PanelToolbar.Size = new System.Drawing.Size(934, 30);
             this.PanelToolbar.TabIndex = 6;
-            // 
-            // TabPages
-            // 
+            
+            
             this.TabPages.ContextMenuStrip = this.menuStripTab;
             this.TabPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabPages.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -205,35 +183,31 @@
             this.TabPages.TabStripItemSelectionChanged += new SharpBrowser.Controls.BrowserTabStrip.TabStripItemChangedHandler(this.OnTabsChanged);
             this.TabPages.TabStripItemClosed += new System.EventHandler(this.OnTabClosed);
             this.TabPages.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tabPages_MouseClick);
-            // 
-            // tabStrip1
-            // 
+            
+
             this.tabStrip1.IsDrawn = true;
             this.tabStrip1.Name = "tabStrip1";
             this.tabStrip1.Selected = true;
             this.tabStrip1.Size = new System.Drawing.Size(932, 591);
             this.tabStrip1.TabIndex = 0;
             this.tabStrip1.Title = "Loading...";
-            // 
-            // tabStripAdd
-            // 
+            
+
             this.tabStripAdd.CanClose = false;
             this.tabStripAdd.IsDrawn = true;
             this.tabStripAdd.Name = "tabStripAdd";
             this.tabStripAdd.Size = new System.Drawing.Size(931, 601);
             this.tabStripAdd.TabIndex = 1;
             this.tabStripAdd.Title = "+";
-            // 
-            // PanelStatus
-            // 
+            
+
             this.PanelStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.PanelStatus.Location = new System.Drawing.Point(0, 651);
             this.PanelStatus.Name = "PanelStatus";
             this.PanelStatus.Size = new System.Drawing.Size(934, 20);
             this.PanelStatus.TabIndex = 8;
-            // 
-            // PanelSearch
-            // 
+            
+
             this.PanelSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.PanelSearch.BackColor = System.Drawing.Color.White;
             this.PanelSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -246,9 +220,8 @@
             this.PanelSearch.Size = new System.Drawing.Size(307, 40);
             this.PanelSearch.TabIndex = 9;
             this.PanelSearch.Visible = false;
-            // 
-            // BtnNextSearch
-            // 
+            
+
             this.BtnNextSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnNextSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnNextSearch.ForeColor = System.Drawing.Color.White;
@@ -261,9 +234,8 @@
             this.BtnNextSearch.Tag = "Find next (Enter)";
             this.BtnNextSearch.UseVisualStyleBackColor = true;
             this.BtnNextSearch.Click += new System.EventHandler(this.BtnNextSearch_Click);
-            // 
-            // BtnPrevSearch
-            // 
+            
+
             this.BtnPrevSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnPrevSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnPrevSearch.ForeColor = System.Drawing.Color.White;
@@ -276,9 +248,8 @@
             this.BtnPrevSearch.Tag = "Find previous (Shift+Enter)";
             this.BtnPrevSearch.UseVisualStyleBackColor = true;
             this.BtnPrevSearch.Click += new System.EventHandler(this.BtnPrevSearch_Click);
-            // 
-            // BtnCloseSearch
-            // 
+            
+
             this.BtnCloseSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnCloseSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnCloseSearch.ForeColor = System.Drawing.Color.White;
@@ -291,9 +262,8 @@
             this.BtnCloseSearch.Tag = "Close (Esc)";
             this.BtnCloseSearch.UseVisualStyleBackColor = true;
             this.BtnCloseSearch.Click += new System.EventHandler(this.BtnClearSearch_Click);
-            // 
-            // TxtSearch
-            // 
+            
+
             this.TxtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TxtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -305,9 +275,8 @@
             this.TxtSearch.TabIndex = 6;
             this.TxtSearch.TextChanged += new System.EventHandler(this.TxtSearch_TextChanged);
             this.TxtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSearch_KeyDown);
-            // 
-            // BtnHome
-            // 
+            
+
             this.BtnHome.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnHome.ForeColor = System.Drawing.Color.White;
@@ -320,9 +289,8 @@
             this.BtnHome.Tag = "Home";
             this.BtnHome.UseVisualStyleBackColor = true;
             this.BtnHome.Click += new System.EventHandler(this.BtnHome_Click);
-            // 
-            // MainForm
-            // 
+            
+
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(934, 671);
             this.Controls.Add(this.PanelSearch);

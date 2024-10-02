@@ -10,10 +10,6 @@ using System.IO;
 
 namespace SharpBrowser {
 
-	/// <summary>
-	/// Two constants extracted from the FileInfoFlags, the only that are
-	/// meaningfull for the user of this class.
-	/// </summary>
 	public enum FileIconSize : int {
 		Large = 0x000000000,
 		Small = 0x000000001
@@ -21,8 +17,6 @@ namespace SharpBrowser {
 
 	public static class FileIconUtils {
 
-
-		// TOP LEVEL API
 
 		public static MemoryStream GetFileIcon(string name, FileIconSize size) {
 			Icon icon = FileIconUtils.IconFromExtension(name.GetAfter("."), size);
@@ -55,57 +49,25 @@ namespace SharpBrowser {
 
 		#region DllImports
 
-		/// <summary>
-		/// Contains information about a file object. 
-		/// </summary>
 		struct SHFILEINFO {
-			/// <summary>
-			/// Handle to the icon that represents the file. You are responsible for
-			/// destroying this handle with DestroyIcon when you no longer need it. 
-			/// </summary>
 			public IntPtr hIcon;
 
-			/// <summary>
-			/// Index of the icon image within the system image list.
-			/// </summary>
 			public IntPtr iIcon;
 
-			/// <summary>
-			/// Array of values that indicates the attributes of the file object.
-			/// For information about these values, see the IShellFolder::GetAttributesOf
-			/// method.
-			/// </summary>
 			public uint dwAttributes;
 
-			/// <summary>
-			/// String that contains the name of the file as it appears in the Microsoft
-			/// Windows Shell, or the path and file name of the file that contains the
-			/// icon representing the file.
-			/// </summary>
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 			public string szDisplayName;
 
-			/// <summary>
-			/// String that describes the type of file.
-			/// </summary>
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
 			public string szTypeName;
 		};
 
 		[Flags]
 		enum FileInfoFlags : int {
-			/// <summary>
-			/// Retrieve the handle to the icon that represents the file and the index 
-			/// of the icon within the system image list. The handle is copied to the 
-			/// hIcon member of the structure specified by psfi, and the index is copied 
-			/// to the iIcon member.
-			/// </summary>
+			
 			SHGFI_ICON = 0x000000100,
-			/// <summary>
-			/// Indicates that the function should not attempt to access the file 
-			/// specified by pszPath. Rather, it should act as if the file specified by 
-			/// pszPath exists with the file attributes passed in dwFileAttributes.
-			/// </summary>
+			
 			SHGFI_USEFILEATTRIBUTES = 0x000000010
 		}
 
@@ -185,10 +147,7 @@ namespace SharpBrowser {
 
 		public static void ExtractEx(string fileName, List<Icon> largeIcons,
 			List<Icon> smallIcons, int firstIconIndex, int iconCount) {
-			/*
-			 * Memory allocations
-			 */
-
+			
 			IntPtr[] smallIconsPtrs = null;
 			IntPtr[] largeIconsPtrs = null;
 
@@ -199,18 +158,11 @@ namespace SharpBrowser {
 				largeIconsPtrs = new IntPtr[iconCount];
 			}
 
-			/*
-			 * Call to native Win32 API
-			 */
-
 			int apiResult = ExtractIconEx(fileName, firstIconIndex, largeIconsPtrs, smallIconsPtrs, iconCount);
 			if (apiResult != iconCount) {
 				throw new UnableToExtractIconsException(fileName, firstIconIndex, iconCount);
 			}
 
-			/*
-			 * Fill lists
-			 */
 
 			if (smallIcons != null) {
 				smallIcons.Clear();
@@ -291,22 +243,18 @@ namespace SharpBrowser {
 			return ExtractIconEx(fileName, -1, null, null, 0);
 		}
 
-		//this will look throw the registry 
-		//to find if the Extension have an icon.
 		public static Icon IconFromExtension(string extension,
 												FileIconSize size) {
-			// Add the '.' to the extension if needed
+			
 			if (extension[0] != '.') extension = '.' + extension;
 			extension = extension.ToLower();
 
-			//opens the registry for the wanted key.
 			RegistryKey Root = Registry.ClassesRoot;
 			RegistryKey ExtensionKey = Root.OpenSubKey(extension);
 			ExtensionKey.GetValueNames();
 			RegistryKey ApplicationKey =
 				Root.OpenSubKey(ExtensionKey.GetValue("").ToString());
 
-			//gets the name of the file that have the icon.
 			string IconLocation =
 				ApplicationKey.OpenSubKey("DefaultIcon").GetValue("").ToString();
 			string[] IconPath = IconLocation.Split(',');
@@ -314,7 +262,6 @@ namespace SharpBrowser {
 			if (IconPath[1] == null) IconPath[1] = "0";
 			IntPtr[] Large = new IntPtr[1], Small = new IntPtr[1];
 
-			//extracts the icon from the file.
 			ExtractIconEx(IconPath[0],
 				Convert.ToInt16(IconPath[1]), Large, Small, 1);
 			return size == FileIconSize.Large ?

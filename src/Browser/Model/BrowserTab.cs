@@ -7,9 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SharpBrowser.Browser.Model {
-	/// <summary>
-	/// POCO created for holding data per tab
-	/// </summary>
+	
 	internal class BrowserTab {
 
 		public bool IsOpen;

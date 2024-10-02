@@ -19,11 +19,6 @@ using System.Windows.Forms.VisualStyles;
 
 namespace SharpBrowser {
 
-	/// <summary>
-	/// The main SharpBrowser form, supporting multiple tabs.
-	/// We used the x86 version of CefSharp, so the app works on 32-bit and 64-bit machines.
-	/// If you would only like to support 64-bit machines, simply change the DLL references.
-	/// </summary>
 	internal partial class MainForm : Form {
 
 		private string appPath = Path.GetDirectoryName(Application.ExecutablePath) + @"\";
@@ -46,7 +41,7 @@ namespace SharpBrowser {
 
 		private void MainForm_Load(object sender, EventArgs e) {
 
-			InitAppIcon();
+			//InitAppIcon();
 			InitTooltips(this.Controls);
 			InitHotkeys();
 
@@ -54,15 +49,6 @@ namespace SharpBrowser {
 
 		#region App Icon
 
-		/// <summary>
-		/// embedding the resource using the Visual Studio designer results in a blurry icon.
-		/// the best way to get a non-blurry icon for Windows 7 apps.
-		/// </summary>
-		private void InitAppIcon() {
-			assembly = Assembly.GetAssembly(typeof(MainForm));
-			Icon = new Icon(GetResourceStream("sharpbrowser.ico"), new Size(64, 64));
-		}
-		
 		public static Assembly assembly = null;
 		public Stream GetResourceStream(string filename, bool withNamespace = true) {
 			try {
@@ -75,13 +61,8 @@ namespace SharpBrowser {
 
 		#region Tooltips & Hotkeys
 
-		/// <summary>
-		/// these hotkeys work when the user is focussed on the .NET form and its controls,
-		/// AND when the user is focussed on the browser (CefSharp portion)
-		/// </summary>
 		private void InitHotkeys() {
 
-			// browser hotkeys
 			KeyboardHandler.AddHotKey(this, CloseActiveTab, Keys.W, true);
 			KeyboardHandler.AddHotKey(this, CloseActiveTab, Keys.Escape, true);
 			KeyboardHandler.AddHotKey(this, AddBlankWindow, Keys.N, true);
@@ -91,7 +72,6 @@ namespace SharpBrowser {
 			KeyboardHandler.AddHotKey(this, NextTab, Keys.Tab, true);
 			KeyboardHandler.AddHotKey(this, PrevTab, Keys.Tab, true, true);
 
-			// search hotkeys
 			KeyboardHandler.AddHotKey(this, OpenSearch, Keys.F, true);
 			KeyboardHandler.AddHotKey(this, CloseSearch, Keys.Escape);
 			KeyboardHandler.AddHotKey(this, StopActiveTab, Keys.Escape);
@@ -100,9 +80,6 @@ namespace SharpBrowser {
 
 		}
 
-		/// <summary>
-		/// we activate all the tooltips stored in the Tag property of the buttons
-		/// </summary>
 		public void InitTooltips(System.Windows.Forms.Control.ControlCollection parent) {
 			foreach (Control ui in parent) {
 				Button btn = ui as Button;
@@ -139,12 +116,8 @@ namespace SharpBrowser {
 		private KeyboardHandler kHandler;
 		private RequestHandler rHandler;
 
-		/// <summary>
-		/// this is done just once, to globally initialize CefSharp/CEF
-		/// </summary>
 		private void InitBrowser() {
 
-			//CefSharpSettings.LegacyJavascriptBindingEnabled = true;
 			
 			Cef.EnableHighDPISupport();
 			CefSettings settings = new CefSettings();
@@ -183,9 +156,6 @@ namespace SharpBrowser {
 
 		}
 
-		/// <summary>
-		/// this is done every time a new tab is openede
-		/// </summary>
 		private void ConfigureBrowser(ChromiumWebBrowser browser) {
 
 			BrowserSettings config = new BrowserSettings();
@@ -215,10 +185,8 @@ namespace SharpBrowser {
 			string newUrl = url;
 			string urlLower = url.Trim().ToLower();
 
-			// UI
 			SetTabTitle(CurBrowser, "Loading...");
 
-			// load page
 			if (urlLower == "localhost") {
 
 				newUrl = "http://localhost/";
@@ -250,13 +218,10 @@ namespace SharpBrowser {
 
 			}
 
-			// load URL
 			CurBrowser.Load(newUrl);
 
-			// set URL in UI
 			SetFormURL(newUrl);
 
-			// always enable back btn
 			EnableBackButton(true);
 			EnableForwardButton(false);
 
@@ -309,7 +274,6 @@ namespace SharpBrowser {
 
 		public void AddBlankWindow() {
 
-			// open a new instance of the browser
 
 			ProcessStartInfo info = new ProcessStartInfo(Application.ExecutablePath, "");
 			//info.WorkingDirectory = workingDir ?? exePath.GetPathDir(true);
@@ -332,7 +296,6 @@ namespace SharpBrowser {
 		public ChromiumWebBrowser AddNewBrowserTab(string url, bool focusNewTab = true, string refererUrl = null) {
 			return (ChromiumWebBrowser)this.Invoke((Func<ChromiumWebBrowser>)delegate {
 
-				// check if already exists
 				foreach (BrowserTabStripItem tab in TabPages.Items) {
 					BrowserTab tab2 = (BrowserTab)tab.Tag;
 					if (tab2 != null && (tab2.CurURL == url)) {
@@ -356,15 +319,12 @@ namespace SharpBrowser {
 			if (url == "") url = BrowserConfig.NewTabURL;
 			ChromiumWebBrowser browser = new ChromiumWebBrowser(url);
 
-			// set config
 			ConfigureBrowser(browser);
 
-			// set layout
 			browser.Dock = DockStyle.Fill;
 			tabStrip.Controls.Add(browser);
 			browser.BringToFront();
 
-			// add events
 			browser.StatusMessage += Browser_StatusMessage;
 			browser.LoadingStateChanged += Browser_LoadingStateChanged;
 			browser.TitleChanged += Browser_TitleChanged;
@@ -376,7 +336,6 @@ namespace SharpBrowser {
 			browser.KeyboardHandler = kHandler;
 			browser.RequestHandler = rHandler;
 
-			// new tab obj
 			BrowserTab tab = new BrowserTab {
 				IsOpen = true,
 				Browser = browser,
@@ -387,7 +346,6 @@ namespace SharpBrowser {
 				DateCreated = DateTime.Now
 			};
 
-			// save tab obj in tabstrip
 			tabStrip.Tag = tab;
 
 			if (url.StartsWith(BrowserConfig.InternalURL + ":")) {
@@ -413,11 +371,9 @@ namespace SharpBrowser {
 		public void CloseActiveTab() {
 			if (CurTab != null/* && TabPages.Items.Count > 2*/) {
 
-				// remove tab and save its index
 				int index = TabPages.Items.IndexOf(TabPages.SelectedItem);
 				TabPages.RemoveTab(TabPages.SelectedItem);
 
-				// keep tab at same index focussed
 				if ((TabPages.Items.Count - 1) > index) {
 					TabPages.SelectedItem = TabPages.Items[index];
 				}
@@ -452,13 +408,11 @@ namespace SharpBrowser {
 
 		private void OnTabClosing(SharpBrowser.Controls.BrowserTabStrip.TabStripItemClosingEventArgs e) {
 
-			// exit if invalid tab
 			if (CurTab == null){
 				e.Cancel = true;
 				return;
 			}
 
-			// add a blank tab if the very last tab is closed!
 			if (TabPages.Items.Count <= 2) {
 				AddBlankTab();
 				//e.Cancel = true;
@@ -549,7 +503,6 @@ namespace SharpBrowser {
 		private void Browser_URLChanged(object sender, AddressChangedEventArgs e) {
 			InvokeIfNeeded(() => {
 
-				// if current tab
 				if (sender == CurBrowser) {
 
 					if (!Utils.IsFocussed(TxtURL)) {
@@ -592,15 +545,12 @@ namespace SharpBrowser {
 				text = "New Tab";
 			}
 
-			// save text
 			browser.Tag = text;
 
-			// get tab of given browser
 			BrowserTabStripItem tabStrip = (BrowserTabStripItem)browser.Parent;
 			tabStrip.Title = text;
 
 
-			// if current tab
 			if (browser == CurBrowser) {
 
 				SetFormTitle(text);
@@ -621,7 +571,6 @@ namespace SharpBrowser {
 
 				} else {
 
-					// after loaded / stopped
 					InvokeIfNeeded(() => {
 						BtnRefresh.Visible = true;
 						BtnStop.Visible = false;
@@ -748,25 +697,19 @@ namespace SharpBrowser {
 		}
 		private void TxtURL_KeyDown(object sender, KeyEventArgs e) {
 
-			// if ENTER or CTRL+ENTER pressed
 			if (e.IsHotkey(Keys.Enter) || e.IsHotkey(Keys.Enter, true)) {
 				LoadURL(TxtURL.Text);
 
-				// im handling this
 				e.Handled = true;
 				e.SuppressKeyPress = true;
 
-				// defocus from url textbox
 				this.Focus();
 			}
 
-			// if full URL copied
 			if (e.IsHotkey(Keys.C, true) && Utils.IsFullySelected(TxtURL)) {
 
-				// copy the real URL, not the pretty one
 				Clipboard.SetText(CurBrowser.Address, TextDataFormat.UnicodeText);
 
-				// im handling this
 				e.Handled = true;
 				e.SuppressKeyPress = true;
 			}
@@ -794,7 +737,6 @@ namespace SharpBrowser {
 
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
 
-			// ask user if they are sure
 			if (DownloadsInProgress()) {
 				if (MessageBox.Show("Downloads are in progress. Cancel those and exit?", "Confirm exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
 					e.Cancel = true;
@@ -802,7 +744,6 @@ namespace SharpBrowser {
 				}
 			}
 
-			// dispose all browsers
 			try {
 				foreach (TabPage tab in TabPages.Items) {
 					ChromiumWebBrowser browser = (ChromiumWebBrowser)tab.Controls[0];
@@ -816,9 +757,6 @@ namespace SharpBrowser {
 		public Dictionary<int, string> downloadNames;
 		public List<int> downloadCancelRequests;
 
-		/// <summary>
-		/// we must store download metadata in a list, since CefSharp does not
-		/// </summary>
 		private void InitDownloads() {
 
 			downloads = new Dictionary<int, DownloadItem>();
@@ -836,12 +774,10 @@ namespace SharpBrowser {
 		public void UpdateDownloadItem(DownloadItem item) {
 			lock (downloads) {
 
-				// SuggestedFileName comes full only in the first attempt so keep it somewhere
 				if (item.SuggestedFileName != "") {
 					downloadNames[item.Id] = item.SuggestedFileName;
 				}
 
-				// Set it back if it is empty
 				if (item.SuggestedFileName == "" && downloadNames.ContainsKey(item.Id)) {
 					item.SuggestedFileName = downloadNames[item.Id];
 				}
@@ -865,9 +801,6 @@ namespace SharpBrowser {
 			return false;
 		}
 
-		/// <summary>
-		/// open a new tab with the downloads URL
-		/// </summary>
 		private void btnDownloads_Click(object sender, EventArgs e) {
 			OpenDownloadsTab();
 		}

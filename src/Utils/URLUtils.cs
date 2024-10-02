@@ -16,22 +16,13 @@ namespace SharpBrowser {
 			return @"file:///" + filePath.Replace(@"\", "/");
 		}
 
-		/// <summary>
-		/// checks if URL starts with file:
-		/// </summary>
 		public static bool IsURLOfflineFile(this string url) {
 			return url.StartsWith("file://", StringComparison.Ordinal);
 		}
-		/// <summary>
-		/// checks if URL is localhost
-		/// </summary>
 		public static bool IsURLLocalhost(this string url) {
 			return url.BeginsWith("http://localhost") || url.BeginsWith("localhost");
 		}
 
-		/// <summary>
-		/// UrlDecodes a string
-		/// </summary>
 		public static string DecodeURL(this string url) {
 			if (url == null) {
 				return null;
@@ -39,19 +30,15 @@ namespace SharpBrowser {
 			int length = url.Length;
 			UrlDecoder decoder = new UrlDecoder(length, Encoding.UTF8);
 
-			// per char
 			for (int i = 0; i < length; i++) {
 				char ch = url[i];
 
 
-				// PLUS char converts to SPACE
 				if (ch == '+') {
 					ch = ' ';
 
-					// SPECIAL chars encoded in "%20" format
 				} else if ((ch == '%') && (i < (length - 2))) {
 
-					// unicode char (4 digit hex)
 					if ((url[i + 1] == 'u') && (i < (length - 5))) {
 						int num3 = HexToInt(url[i + 2]);
 						int num4 = HexToInt(url[i + 3]);
@@ -66,7 +53,6 @@ namespace SharpBrowser {
 						continue;
 					}
 
-					// ascii char (2 digit hex)
 					int num7 = HexToInt(url[i + 1]);
 					int num8 = HexToInt(url[i + 2]);
 					if ((num7 >= 0) && (num8 >= 0)) {
@@ -128,7 +114,6 @@ namespace SharpBrowser {
 					this.FlushBytes();
 				}
 
-				// ADD CHAR AS HEX .. IF NOT SUPPORTED IN FILEPATHS
 				if (checkChar && forFilePaths) {
 					if (!ch.SupportedInFilePath()) {
 						AddChar('_');
@@ -181,9 +166,6 @@ namespace SharpBrowser {
 			}
 		}
 
-		/// <summary>
-		/// UrlDecodes a string except chars forbidden in Windows filepaths
-		/// </summary>
 		public static string DecodeURLForFilepath(this string url) {
 
 
@@ -196,19 +178,15 @@ namespace SharpBrowser {
 			decoder.forFilePaths = true;
 
 
-			// per char
 			for (int i = 0; i < length; i++) {
 				char ch = url[i];
 
 
-				// PLUS char converts to SPACE
 				if (ch == '+') {
 					ch = ' ';
 
-					// SPECIAL chars encoded in "%20" format
 				} else if ((ch == '%') && (i < (length - 2))) {
 
-					// unicode char (4 digit hex)
 					if ((url[i + 1] == 'u') && (i < (length - 5))) {
 						int num3 = HexToInt(url[i + 2]);
 						int num4 = HexToInt(url[i + 3]);
@@ -219,36 +197,32 @@ namespace SharpBrowser {
 						}
 						ch = (char)((((num3 << 12) | (num4 << 8)) | (num5 << 4)) | num6);
 						i += 5;
-						decoder.FlushBytes(false); // dont check previous stuff
-						decoder.AddChar(ch, true); // CHECK IF CHAR OK WITH FILEPATH
+						decoder.FlushBytes(false);
+						decoder.AddChar(ch, true);
 						continue;
 					}
 
-					// ascii char (2 digit hex)
 					int num7 = HexToInt(url[i + 1]);
 					int num8 = HexToInt(url[i + 2]);
 					if ((num7 >= 0) && (num8 >= 0)) {
 						byte b = (byte)((num7 << 4) | num8);
 						i += 2;
-						decoder.FlushBytes(false); // dont check previous stuff
+						decoder.FlushBytes(false);
 						decoder.AddByte(b);
 
-						// check if unicode char ("%11%11")
 						if (((i + 1) < (length - 2)) && (url[i + 1] == '%')) {
 
-							// YES, unicode char
 							num7 = HexToInt(url[i + 1]);
 							num8 = HexToInt(url[i + 2]);
 							if ((num7 >= 0) && (num8 >= 0)) {
 								b = (byte)((num7 << 4) | num8);
 								i += 2;
 								decoder.AddByte(b);
-								decoder.FlushBytes(true); // CHECK IF CHARS OK WITH FILEPATHS
+								decoder.FlushBytes(true);
 							}
 						} else {
 
-							// NO, not unicode char
-							decoder.FlushBytes(true); // CHECK IF CHARS OK WITH FILEPATHS
+							decoder.FlushBytes(true);
 
 						}
 
@@ -268,9 +242,6 @@ namespace SharpBrowser {
 			return decoder.GetString();
 		}
 
-		/// <summary>
-		/// UrlEncodes a string without the requirement for System.Web
-		/// </summary>
 		public static string EncodeURL(this string text) {
 			return System.Uri.EscapeDataString(text);
 		}

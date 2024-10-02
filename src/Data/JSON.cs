@@ -18,41 +18,22 @@ public delegate object Deserialize(string data);
 
 public class JSONParameters
 {
-	/// <summary>
-	/// Use the optimized fast Dataset Schema format (dfault = True)
-	/// </summary>
 	public bool UseOptimizedDatasetSchema = true;
-	/// <summary>
-	/// Use the fast GUID format (default = True)
-	/// </summary>
+	
 	public bool UseFastGuid = true;
-	/// <summary>
-	/// Serialize null values to the output (default = True)
-	/// </summary>
+	
 	public bool SerializeNullValues = true;
-	/// <summary>
-	/// Use the UTC date format (default = True)
-	/// </summary>
+	
 	public bool UseUTCDateTime = true;
-	/// <summary>
-	/// Show the readonly properties of types in the output (default = False)
-	/// </summary>
+	
 	public bool ShowReadOnlyProperties = false;
-	/// <summary>
-	/// Use the $types extension to optimise the output json (default = True)
-	/// </summary>
+	
 	public bool UsingGlobalTypes = true;
-	/// <summary>
-	/// 
-	/// </summary>
+	
 	public bool IgnoreCaseOnDeserialize = false;
-	/// <summary>
-	/// Anonymous types have read only properties 
-	/// </summary>
+	
 	public bool EnableAnonymousTypes = false;
-	/// <summary>
-	/// Enable fastJSON extensions $types, $type, $map (default = True)
-	/// </summary>
+	
 	public bool UseExtensions = true;
 }
 
@@ -63,12 +44,8 @@ public class JSON
 	private JSON()
 	{
 	}
-	/// <summary>
-	/// You can set these paramters globally for all calls
-	/// </summary>
 	public JSONParameters Parameters = new JSONParameters();
 	private JSONParameters _params;
-	// FIX : extensions off should not output $types 
 	public string ToJSON(object obj)
 	{
 		_params = Parameters;
@@ -80,7 +57,6 @@ public class JSON
 	{
 		_params = param;
 		Reflection.Instance.ShowReadOnlyProperties = _params.ShowReadOnlyProperties;
-		// FEATURE : enable extensions when you can deserialize anon types
 		if (_params.EnableAnonymousTypes) { _params.UseExtensions = false; _params.UsingGlobalTypes = false; }
 		return new JSONSerializer(param).ConvertToJSON(obj);
 	}

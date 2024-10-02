@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SharpBrowser.Browser.Model {
-	/// <summary>
-	/// POCO for holding hotkey data
-	/// </summary>
+	
 	internal class BrowserHotKey {
 
 		public Keys Key;
